@@ -1,13 +1,17 @@
 import numpy as np
 import pickle
-from flask import Flask, request, jsonify, render_template
+import sys
+import sklearn.linear_model._base
 
+# Compatibility for models saved with older scikit-learn versions
+sys.modules['sklearn.linear_model.base'] = sklearn.linear_model._base
+
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
 # Load trained model
 model = pickle.load(open('model.pkl', 'rb'))
-
 
 @app.route('/')
 def home():
