@@ -13,6 +13,11 @@ app = Flask(__name__)
 # Load trained model
 model = pickle.load(open('model.pkl', 'rb'))
 
+# Compatibility for older LinearRegression models
+if not hasattr(model, 'positive'):
+    model.positive = False
+
+
 @app.route('/')
 def home():
     return render_template('index.html')
